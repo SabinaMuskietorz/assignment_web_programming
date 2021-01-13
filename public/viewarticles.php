@@ -46,6 +46,7 @@ else if  (isset($_GET['idarticle']))  {
 		 echo '<h1>' . $articles['title'] . '</h1>';
 		 echo '<p>' .  $articles['content'] . '</p>';
 		 echo '<p>Author:' .'	' .  $articles['author'] . '</p>';
+		 echo '<p>Posted on:' .'	' .  $articles['date'] . '</p>';
 		}
 else {
 	// if no category has been chosen, print all articles with avability to view, edit and delete the article

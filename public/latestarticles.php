@@ -50,6 +50,8 @@ if (isset($_GET['idcategory']))  {
 			echo '<h1>' . $articles['title'] . '</h1>';
 			echo '<p>' .  $articles['content'] . '</p>';
 			echo '<p>Author:' .'	' .  $articles['author'] . '</p>';
+			echo '<p>Posted on:' .'	' .  $articles['date'] . '</p>';
+
 			/* if you are logged in, you can make a comment on article
 			and see all the comments posted by other users */
 			if(isset($_SESSION['loggedin'])) {
