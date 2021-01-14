@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     echo '<p>Record Updated</p>';
     echo '<p><a href="admin.php">Back to main</a>';
 }
-//if category to be edited has been chosen fetch the name and id from database
+//if category to be edited has been chosen, fetch the name and id from database
 else if  (isset($_GET['idcategory']))  {
 	$nameStmt = $pdo->prepare('SELECT * FROM category WHERE idcategory = :idcategory');
     $values = [
@@ -31,15 +31,15 @@ else if  (isset($_GET['idcategory']))  {
 		 ];   
 		 
 		 $nameStmt->execute($values);
-		$names = $nameStmt->fetch();
+		$name = $nameStmt->fetch();
 		//print current category name
-         echo '<h1>' . $names['name'] . '</h1>';
+         echo '<h1>' . $name['name'] . '</h1>';
          ?>
          <form action="editcategory.php?idcategory=<?php echo $_GET['idcategory'];?>" method="post">
          <!-- type edited category name to the form-->
          <label>New category name:</label>
-         <input type="text" name="name" value="<?php echo $names['name'];?>" />
-         <input type="hidden" name="idcategory" value="<?php echo $names['idcategory'];?>" />
+         <input type="text" name="name" value="<?php echo $name['name'];?>" />
+         <input type="hidden" name="idcategory" value="<?php echo $name['idcategory'];?>" />
          <input type="submit" value="submit" name="submit" />
      </form>
      <?php

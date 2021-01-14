@@ -22,11 +22,13 @@ if (password_verify($_POST['password'], $user['password'])) {
     $_SESSION ['loggedin'] = true;
     $_SESSION ['id'] = $user['iduser'];
     $_SESSION ['name'] = $user['username'];
+    $_SESSION ['role'] = $user['role'];
+
     /*check if person is an admin.
     In that case using === because want to check if :
     $a === $b	Identical, so if $a is equal to $b, and they are of the same type.
     https://www.php.net/manual/en/language.operators.comparison.php*/
-    if($_POST['username'] === 'johnsmith@example.org' && $_POST['password'] === 'password') {
+    if($user['role'] === 'admin') {
         /* if person is an admin it sets the session to admin and prints hello to admin
         and directs them to admin page */
         $_SESSION ['admin'] = true;
