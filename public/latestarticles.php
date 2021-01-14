@@ -51,6 +51,8 @@ if (isset($_GET['idcategory']))  {
 			echo '<p>' .  $articles['content'] . '</p>';
 			echo '<p>Author:' .'	' .  $articles['author'] . '</p>';
 			echo '<p>Posted on:' .'	' .  $articles['date'] . '</p>';
+			//share article to facebook
+			echo '<p>Share:' .'		' . '<a href="https://www.facebook.com/sharer.php?u=https://assignment.v.je/latestarticles.php?idarticle=' . $_GET['idarticle'] . '">Facebook</a></p>';
 
 			/* if you are logged in, you can make a comment on article
 			and see all the comments posted by other users */

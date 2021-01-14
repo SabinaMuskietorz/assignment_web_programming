@@ -35,9 +35,9 @@ else if  (isset($_GET['iduser']))  {
 		 $nameStmt->execute($values);
          $name = $nameStmt->fetch();
 		//print users username
-         echo '<p>' . $name['username'] . '</p>';
+         echo '<p><strong>' . $name['username'] . '</strong></p>';
          //print user's current role
-         echo '<p>' . $name['role'] . '</p>';
+         echo '<p>Current role:<strong>' .'     ' . $name['role'] . '</strong></p>';
          ?>
          <form action="assignadmin.php?iduser=<?php echo $_GET['iduser'];?>" method="post">
          <label>New role:</label>

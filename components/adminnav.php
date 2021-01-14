@@ -7,6 +7,7 @@
 		<li><a href="deletecategory.php">Delete category</a></li>
 		<li><a href="addarticle.php">Add article</a></li>
 		<li><a href="deletearticle.php">Delete article</a></li>
+		<li><a href="assignadmin.php">Assign admin</a></li>
 	</ul>
 </nav>
 <article>
