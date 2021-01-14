@@ -1,11 +1,14 @@
 <?php
 session_start();
+/*this page allows admins to assign a role to an user,
+so for example make user an admin with permissions */
 require '../components/connection.php';
-$title = 'Edit category';
+$title = 'Assign role';
 require '../components/head.php';
 //only admin has access
 if (isset($_SESSION['admin'])) {
 require '../components/adminnav.php';
+//update user's role they currently have
 if (isset($_POST['submit'])) {
     $stmt = $pdo->prepare('UPDATE user SET
                                role = :role
@@ -18,11 +21,11 @@ if (isset($_POST['submit'])) {
          ]; 
    
     $stmt->execute($values);
-    //print that admin was edited
+    //print that role was edited
     echo '<p>Record Updated</p>';
     echo '<p><a href="admin.php">Back to main</a>';
 }
-//if user to be edited has been chosen, fetch the username and id from database
+//if user to be edited has been chosen, fetch their username and id from database
 else if  (isset($_GET['iduser']))  {
 	$nameStmt = $pdo->prepare('SELECT * FROM user WHERE iduser = :iduser');
     $values = [
@@ -31,13 +34,14 @@ else if  (isset($_GET['iduser']))  {
 		 
 		 $nameStmt->execute($values);
          $name = $nameStmt->fetch();
-		
+		//print users username
          echo '<p>' . $name['username'] . '</p>';
+         //print user's current role
          echo '<p>' . $name['role'] . '</p>';
          ?>
          <form action="assignadmin.php?iduser=<?php echo $_GET['iduser'];?>" method="post">
-    
          <label>New role:</label>
+         <!--type new user's role-->
          <input type="text" name="role" value="<?php echo $name['role'];?>" />
          <input type="hidden" name="iduser" value="<?php echo $name['iduser'];?>" />
          <input type="submit" value="submit" name="submit" />
@@ -46,7 +50,7 @@ else if  (isset($_GET['iduser']))  {
 
 		}
         else {
-            
+            //in no user has been selected print all of them using their username
             $userStmt = $pdo->prepare('SELECT * FROM user');
             $userStmt->execute();
             echo '<ul>';
