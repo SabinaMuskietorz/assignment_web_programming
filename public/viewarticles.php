@@ -1,7 +1,5 @@
 <?php 
-/* this website is made for admin to view the articles and amend it if they wish.
-Available functions: view article, add article, edit article,
-add category, delete category */
+/* this website is made for admin to view the articles, with all  the info and comments */
 session_start();
 require '../components/connection.php';
 $title = 'View articles';
@@ -24,12 +22,10 @@ if (isset($_GET['idcategory']))  {
 
 	echo '<h1>' . $category['name'] . ' articles</h1>';
 	echo '<ul>';
-	//print all the articles from that category with avability to view, edit and delete the article
+	//print all the articles from that category with avability to view the article
 	foreach ($articles as $article) {
 		echo '<li>' . $article['title'] . 
-		' <a href="viewarticles.php?idarticle=' . $article['idarticle'] . '">Wiev</a>' .
-		 ' <a href="editarticle.php?idarticle=' . $article['idarticle'] . '">Edit</a>' .
-		 ' <a href="deletearticle.php?idarticle=' . $article['idarticle'] . '">Delete</a></li>';
+		'<a href="viewarticles.php?idarticle=' . $article['idarticle'] . '">Wiev</a>';
 	}
 	echo '</ul>';
 }
@@ -47,17 +43,38 @@ else if  (isset($_GET['idarticle']))  {
 		 echo '<p>' .  $articles['content'] . '</p>';
 		 echo '<p>Author:' .'	' .  $articles['author'] . '</p>';
 		 echo '<p>Posted on:' .'	' .  $articles['date'] . '</p>';
+		 echo '<p>Comments:</p>';
+			$commentQuery = $pdo->prepare('SELECT * FROM comment WHERE idarticle = :idarticle');
+			
+			 $values = [
+				'idarticle' => $_GET['idarticle']
+			 ];
+			$commentQuery->execute($values);
+			echo '<ul>';
+			//check who posted that comment 
+			foreach ($commentQuery as $comment) {
+				$namestmt = $pdo->prepare('SELECT * FROM user WHERE iduser = :id');
+				$values = [
+					'id' => $comment['iduser']
+					];
+				$namestmt->execute($values);
+				//fetch gets the first or next row, fetchall gets all the results
+				$name = $namestmt->fetch();
+				//print all comments in a list, with the username, that made that comment, and the date that it was posted
+				echo '<li><strong>' .
+			    $name['username'] .'	' . '</strong>posted the comment<strong>' . '	' . $comment['comment'] . '</strong>
+					 on' . '	' . $comment['date'] . '</li>';
+			}
+		echo '</ul>';
 		}
 else {
-	// if no category has been chosen, print all articles with avability to view, edit and delete the article
+	// if no category has been chosen, print all articles with avability to view the article
 	$articleStmt = $pdo->prepare('SELECT * FROM article');
 	$articleStmt->execute();
 	echo '<ul>';
 	foreach ($articleStmt as $article) {
 		echo '<li>' . $article['title'] . 
-		' <a href="viewarticles.php?idarticle=' . $article['idarticle'] . '">Wiev</a>' .
-		 ' <a href="editarticle.php?idarticle=' . $article['idarticle'] . '">Edit</a>' .
-		 ' <a href="deletearticle.php?idarticle=' . $article['idarticle'] . '">Delete</a></li>';
+		' <a href="viewarticles.php?idarticle=' . $article['idarticle'] . '">Wiev</a>';
 	}
 	echo '</ul>';
 }

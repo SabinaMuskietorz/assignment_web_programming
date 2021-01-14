@@ -32,10 +32,11 @@ if (isset($_POST['submit'])) {
     echo '<p>Record Updated</p>';
     echo '<p><a href="admin.php">Back to main</a>';
 }
-else {
+else if  (isset($_GET['idarticle']))  {
     /* print the form but fetch the current data about the article from database ,
     so the user dont have to type in the entire article all over again,
     if he just want to make minor changes */
+   
     $stmt = $pdo->prepare('SELECT * FROM article WHERE idarticle = :idarticle');
     $values = [
         'idarticle' => $_GET['idarticle']
@@ -54,6 +55,17 @@ else {
         <input type="submit" value="submit" name="submit" />
     </form>
     <?php
+}
+else {
+    //if no article has been selected print all of them using their title
+    $articleStmt = $pdo->prepare('SELECT * FROM article');
+    $articleStmt->execute();
+    echo '<ul>';
+    foreach ($articleStmt as $article) {
+        echo '<li>' . $article['title'] . 
+         ' <a href="editarticle.php?idarticle=' . $article['idarticle'] . '">Edit</a></li>';
+    }
+    echo '</ul>';
 }
 }
     else {
