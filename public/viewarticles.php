@@ -19,11 +19,10 @@ if (isset($_GET['idcategory']))  {
 		$articles = $articleStmt->fetchAll();
 
 	echo '<h1>' . $category['name'] . ' articles</h1>';
-	echo '<ul>';
 	//print all the articles from that category with avability to view the article
+	echo '<ul>';
 	foreach ($articles as $article) {
-		echo '<li>' . $article['title'] . 
-		'<a href="viewarticles.php?idarticle=' . $article['idarticle'] . '">Wiev</a>';
+		echo '<li><a href="viewarticles.php?idarticle=' . $article['idarticle'] . '">' . $article['title'] . '</a></li>';
 	}
 	echo '</ul>';
 }
