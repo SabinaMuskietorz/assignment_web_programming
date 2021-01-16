@@ -42,6 +42,7 @@ echo '<p>Record deleted</p>';
 }
 }
 else {
+	require '../components/basenav.php';
 	echo 'You are an user. <a href="localnews.php">Click here</a>';
 }
 require '../components/foot.php';
